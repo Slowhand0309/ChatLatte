@@ -1,1 +1,1 @@
-include ':app', ':chatlatte'
+include ':sample', ':chatlatte'
