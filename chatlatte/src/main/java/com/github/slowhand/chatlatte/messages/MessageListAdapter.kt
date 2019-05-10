@@ -22,6 +22,6 @@ class MessageListAdapter(
 
     override fun onBindViewHolder(holder: MessageListViewHolder, position: Int) {
         val message = items[position]
-        holder.messageText.text = message.text
+        holder.messageText.text = message.body
     }
 }

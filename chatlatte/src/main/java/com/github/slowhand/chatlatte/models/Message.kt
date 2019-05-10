@@ -9,6 +9,9 @@ enum class MessageType {
 }
 
 data class Message(
-    var text: String = "",
+    val ownerId: UserId,
+    var body: String = "",
+    val type: MessageType = MessageType.TEXT,
+    var isDelete: Boolean = false,
     val createdAt: Date = Date()
 )
