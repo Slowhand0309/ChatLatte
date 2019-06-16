@@ -7,8 +7,8 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <com.github.slowhand.chatlatte.messages.MessageListView
-            android:id="@+id/messageListView"
+    <com.github.slowhand.chatlatte.view.ChatLatteView
+            android:id="@+id/chatLatteView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
