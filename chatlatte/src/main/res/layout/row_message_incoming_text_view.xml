@@ -6,10 +6,12 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
