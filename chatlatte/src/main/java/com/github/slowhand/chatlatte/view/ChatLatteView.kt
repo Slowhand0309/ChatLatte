@@ -4,22 +4,44 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.OneShotPreDrawListener.add
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.slowhand.chatlatte.R
 import com.github.slowhand.chatlatte.messages.MessageListAdapter
 import com.github.slowhand.chatlatte.models.Message
+import com.github.slowhand.chatlatte.models.User
+import com.github.slowhand.chatlatte.models.UserId
 import kotlinx.android.synthetic.main.chat_latte_view.view.*
 
 class ChatLatteView: ConstraintLayout {
 
-    // property
+    // all messages
     private var _messages: MutableList<Message> = ArrayList()
     var messages: List<Message> = emptyList()
         set(value) {
             _messages.clear()
             _messages.addAll(0, value)
             field = value
+        }
+
+    // self user
+    var self: User
+        set(value) {
+            adapter.self = value
+        }
+        get() = adapter.self
+
+
+    // members
+    fun join(user: User) = adapter.apply {
+            members.add(user)
+            notifyDataSetChanged()
+        }
+
+    fun leaveAll() = adapter.apply {
+            members.clear()
+            notifyDataSetChanged()
         }
 
     private val adapter: MessageListAdapter by lazy {
