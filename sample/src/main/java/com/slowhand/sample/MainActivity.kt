@@ -2,6 +2,7 @@ package com.slowhand.sample
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.slowhand.chatlatte.models.Message
 import com.github.slowhand.chatlatte.models.User
@@ -26,5 +27,10 @@ class MainActivity : AppCompatActivity() {
             Message(body = "Hello John, thank you for calling Provide Support. How may I help you?", ownerId = UserId("1"), isOwner = true),
             Message(body = "Let me check that I have this right…", ownerId = UserId("2"), isOwner = false),
             Message(body = "That is a good question, let me find out for you.", ownerId = UserId("3"), isOwner = false))
+
+        chatLatteView.setOnClickSendButtonListener {
+            val m = Message(body = "Add message", ownerId = UserId("1"), isOwner = true)
+            chatLatteView.sendMessage(m)
+        }
     }
 }
