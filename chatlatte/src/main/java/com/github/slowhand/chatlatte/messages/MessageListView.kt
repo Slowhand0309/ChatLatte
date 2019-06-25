@@ -15,4 +15,8 @@ class MessageListView: RecyclerView {
     private fun initialize(context: Context, attrs: AttributeSet?) {
 
     }
+
+    fun scrollToEnd() {
+        adapter?.also { smoothScrollToPosition(it.itemCount - 1) }
+    }
 }

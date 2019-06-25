@@ -28,13 +28,13 @@ data class Message(
     fun layoutType(): LayoutType
         = when(this.type) {
             MessageType.TEXT -> {
-                if (this.isOwner) LayoutType.INCOMING_TEXT else LayoutType.OUTGOING_TEXT
+                if (this.isOwner) LayoutType.OUTGOING_TEXT else LayoutType.INCOMING_TEXT
             }
             MessageType.PICTURE -> {
-                if (this.isOwner) LayoutType.INCOMING_PICTURE else LayoutType.OUTGOING_PICTURE
+                if (this.isOwner) LayoutType.OUTGOING_PICTURE else LayoutType.INCOMING_PICTURE
             }
             MessageType.LINK -> {
-                if (this.isOwner) LayoutType.INCOMING_LINK else LayoutType.OUTGOING_LINK
+                if (this.isOwner) LayoutType.OUTGOING_LINK else LayoutType.INCOMING_LINK
             }
         }
 }

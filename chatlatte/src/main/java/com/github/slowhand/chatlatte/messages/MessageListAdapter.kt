@@ -1,6 +1,7 @@
 package com.github.slowhand.chatlatte.messages
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.IdRes
@@ -10,11 +11,16 @@ import com.github.slowhand.chatlatte.messages.viewholder.BaseViewHolder
 import com.github.slowhand.chatlatte.messages.viewholder.TextViewHolder
 import com.github.slowhand.chatlatte.models.LayoutType
 import com.github.slowhand.chatlatte.models.Message
+import com.github.slowhand.chatlatte.models.User
+import com.github.slowhand.chatlatte.models.UserId
 
 class MessageListAdapter(
     private val context: Context,
     private val items: List<Message>
 ) : RecyclerView.Adapter<BaseViewHolder>() {
+
+    var self = User(id = UserId(""))
+    var members: MutableList<User> = ArrayList()
 
     /**
      * viewType毎に異なるViewHolderを生成する
@@ -76,12 +82,12 @@ class MessageListAdapter(
         when(getItemViewType(position)) {
             LayoutType.INCOMING_TEXT.rawValue -> {
                 (holder as? TextViewHolder)?.also {
-                    it.messageText.text = message.body
+                    bindTextMessage(it, message)
                 }
             }
             LayoutType.OUTGOING_TEXT.rawValue -> {
                 (holder as? TextViewHolder)?.also {
-                    it.messageText.text = message.body
+                    bindTextMessage(it, message)
                 }
             }
             LayoutType.INCOMING_PICTURE.rawValue -> {
@@ -97,6 +103,18 @@ class MessageListAdapter(
                 R.layout.row_message_outgoing_link_view
             }
             else -> 0
+        }
+    }
+
+    private fun bindTextMessage(holder: TextViewHolder, message: Message) {
+        holder.messageText.text = message.body
+        holder.messageTime.text = DateFormat.format("kk:mm", message.createdAt)
+
+        // avatar image
+        holder.avatarImage?.also { imageView ->
+            members.filter { it.id == message.ownerId }.firstOrNull()?.also { owner ->
+                owner.icon?.let { imageView.setImageBitmap(it) }
+            }
         }
     }
 }
