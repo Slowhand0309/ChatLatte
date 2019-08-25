@@ -66,6 +66,7 @@ class ChatLatteView: ConstraintLayout {
             notifyDataSetChanged()
         }
 
+    // send message
     fun sendMessage(message: Message) {
         _messages.add(message)
         adapter.notifyDataSetChanged()
@@ -74,10 +75,12 @@ class ChatLatteView: ConstraintLayout {
         if (autoClearTextEnabled) inputEditText.text.clear()
     }
 
+    // send button clicked
     fun setOnClickSendButtonListener(listener: (view: View, message: String) -> Unit) {
         sendButton.setOnClickListener { listener(it, inputEditText.text.toString()) }
     }
 
+    // gallery button clicked
     fun setOnClickGalleryListener(listener: (view: View) -> Unit) {
         galleryButton.setOnClickListener(listener)
     }
@@ -85,6 +88,12 @@ class ChatLatteView: ConstraintLayout {
     fun setPlaceholder(message: String) {
         inputEditText.hint = message
     }
+
+    // scroll to end list view
+    fun scrollToEnd() = messageListView.scrollToEnd()
+
+    // call notifyDataSetChanged
+    fun reload() = adapter.apply { notifyDataSetChanged() }
 
 
     private val adapter: MessageListAdapter by lazy {
