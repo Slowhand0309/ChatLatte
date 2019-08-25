@@ -41,12 +41,26 @@ class ChatLatteView: ConstraintLayout {
     // clear text field via send text
     var autoClearTextEnabled = true
 
-    // members
+    // join member
     fun join(user: User) = adapter.apply {
             members.add(user)
             notifyDataSetChanged()
         }
 
+    // join members
+    fun joins(vararg users: User) = adapter.apply {
+        users.forEach { members.add(it) }
+        notifyDataSetChanged()
+    }
+
+    // leave member
+    fun leave(user: User) = adapter.apply {
+        val index = members.indexOfFirst { it.id == user.id }
+        if (index < 0) return@apply
+        members.removeAt(index)
+    }
+
+    // leave all members
     fun leaveAll() = adapter.apply {
             members.clear()
             notifyDataSetChanged()
@@ -60,8 +74,12 @@ class ChatLatteView: ConstraintLayout {
         if (autoClearTextEnabled) inputEditText.text.clear()
     }
 
-    fun setOnClickSendButtonListener(listener: (view: View) -> Unit) {
-        sendButton.setOnClickListener { listener(it) }
+    fun setOnClickSendButtonListener(listener: (view: View, message: String) -> Unit) {
+        sendButton.setOnClickListener { listener(it, inputEditText.text.toString()) }
+    }
+
+    fun setOnClickGalleryListener(listener: (view: View) -> Unit) {
+        galleryButton.setOnClickListener(listener)
     }
 
     fun setPlaceholder(message: String) {
