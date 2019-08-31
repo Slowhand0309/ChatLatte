@@ -2,6 +2,7 @@ package com.slowhand.sample
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.slowhand.chatlatte.models.Message
 import com.github.slowhand.chatlatte.models.User
@@ -30,6 +31,15 @@ class MainActivity : AppCompatActivity() {
         chatLatteView.setOnClickSendButtonListener { _, message ->
             val m = Message(body = message, ownerId = UserId("1"), isOwner = true)
             chatLatteView.sendMessage(m)
+        }
+
+        chatLatteView.onMessageClickListener = { message ->
+            Toast.makeText(this@MainActivity, "Message click: ${message.body}", Toast.LENGTH_SHORT).show()
+        }
+
+        chatLatteView.onMessageLongClickListener = { message ->
+            Toast.makeText(this@MainActivity, "Message long click: ${message.body}", Toast.LENGTH_SHORT).show()
+            true
         }
     }
 }

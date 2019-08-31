@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import com.github.slowhand.chatlatte.R
 import com.github.slowhand.chatlatte.messages.viewholder.BaseViewHolder
@@ -21,6 +20,14 @@ class MessageListAdapter(
 
     var self = User(id = UserId(""))
     var members: MutableList<User> = ArrayList()
+
+    interface OnEventListener {
+        // Message event's
+        fun onMessageClick(message: Message)
+        fun onMessageLongClick(message: Message): Boolean
+    }
+
+    var listener: OnEventListener? = null
 
     /**
      * viewType毎に異なるViewHolderを生成する
@@ -115,6 +122,11 @@ class MessageListAdapter(
             members.filter { it.id == message.ownerId }.firstOrNull()?.also { owner ->
                 owner.icon?.let { imageView.setImageBitmap(it) }
             }
+        }
+
+        holder.messageTextContainer.setOnClickListener { listener?.onMessageClick(message) }
+        holder.messageTextContainer.setOnLongClickListener {
+            listener?.onMessageLongClick(message) ?: false
         }
     }
 }

@@ -5,14 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.OneShotPreDrawListener.add
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.slowhand.chatlatte.R
 import com.github.slowhand.chatlatte.messages.MessageListAdapter
 import com.github.slowhand.chatlatte.models.Message
 import com.github.slowhand.chatlatte.models.User
-import com.github.slowhand.chatlatte.models.UserId
 import kotlinx.android.synthetic.main.chat_latte_view.view.*
 
 class ChatLatteView: ConstraintLayout {
@@ -85,6 +83,9 @@ class ChatLatteView: ConstraintLayout {
         galleryButton.setOnClickListener(listener)
     }
 
+    var onMessageClickListener: (message: Message) -> Unit = {}
+    var onMessageLongClickListener: (message: Message) -> Boolean = { false }
+
     fun setPlaceholder(message: String) {
         inputEditText.hint = message
     }
@@ -97,7 +98,9 @@ class ChatLatteView: ConstraintLayout {
 
 
     private val adapter: MessageListAdapter by lazy {
-        MessageListAdapter(context, _messages)
+        MessageListAdapter(context, _messages).apply {
+            listener = onEventListener
+        }
     }
 
     constructor(context: Context?) : this(context, null)
@@ -116,5 +119,14 @@ class ChatLatteView: ConstraintLayout {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+    }
+
+    private val onEventListener = object: MessageListAdapter.OnEventListener {
+        override fun onMessageClick(message: Message) {
+            onMessageClickListener(message)
+        }
+
+        override fun onMessageLongClick(message: Message): Boolean
+                = onMessageLongClickListener(message)
     }
 }
