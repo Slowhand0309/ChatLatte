@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.slowhand.chatlatte.models.Message
+import com.github.slowhand.chatlatte.models.MessageType
 import com.github.slowhand.chatlatte.models.User
 import com.github.slowhand.chatlatte.models.UserId
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         chatLatteView.messages = listOf(
             Message(body = "Hello John, thank you for calling Provide Support. How may I help you?", ownerId = UserId("1"), isOwner = true),
             Message(body = "Let me check that I have this right…", ownerId = UserId("2"), isOwner = false),
-            Message(body = "That is a good question, let me find out for you.", ownerId = UserId("3"), isOwner = false))
+            Message(body = "That is a good question, let me find out for you.", ownerId = UserId("3"), isOwner = false),
+            Message(body = "https://cdn.pixabay.com/photo/2016/03/26/14/04/marshall-1280626_960_720.jpg", ownerId = UserId("1"), isOwner = true, type = MessageType.PICTURE))
+
 
         chatLatteView.setOnClickSendButtonListener { _, message ->
             val m = Message(body = message, ownerId = UserId("1"), isOwner = true)
