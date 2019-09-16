@@ -5,15 +5,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.slowhand.chatlatte.R
+import com.github.slowhand.chatlatte.view.RoundedImageView
 
-class TextViewHolder(view: View) : BaseViewHolder(view) {
+class ImageViewHolder(view: View) : BaseViewHolder(view) {
 
-    val messageText: TextView by lazy {
-        view.findViewById<TextView>(R.id.messageText)
+    val messageImage: RoundedImageView by lazy {
+        view.findViewById<RoundedImageView>(R.id.messageImage)
     }
 
-    val messageTextContainer: LinearLayout by lazy {
-        view.findViewById<LinearLayout>(R.id.messageTextContainer)
+    val messageImageContainer: LinearLayout by lazy {
+        view.findViewById<LinearLayout>(R.id.messageImageContainer)
     }
 
     val messageTime: TextView by lazy {
