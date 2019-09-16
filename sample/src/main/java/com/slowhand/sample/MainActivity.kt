@@ -1,9 +1,11 @@
 package com.slowhand.sample
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.github.slowhand.chatlatte.config.ChatLatteConfig
 import com.github.slowhand.chatlatte.models.Message
 import com.github.slowhand.chatlatte.models.MessageType
 import com.github.slowhand.chatlatte.models.User
@@ -15,6 +17,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // style
+        val config = ChatLatteConfig().apply {
+            chatBackgroundColor = Color.CYAN
+            inputTextContainerColor = Color.parseColor("#E6FFE9")
+            sendButtonImage = BitmapFactory.decodeResource(resources, android.R.drawable.ic_media_play)
+            placeholder = "input text here."
+        }
+        chatLatteView.config = config
+        chatLatteView.addCustomButton(BitmapFactory.decodeResource(resources, android.R.drawable.ic_menu_more)) {
+            Toast.makeText(this@MainActivity, "Custom button clicked", Toast.LENGTH_SHORT).show()
+        }
 
         val user1 = User(id = UserId("1"), name = "me")
         val user2 = User(id = UserId("2"), name = "user2", icon = BitmapFactory.decodeResource(resources, R.drawable.man1))

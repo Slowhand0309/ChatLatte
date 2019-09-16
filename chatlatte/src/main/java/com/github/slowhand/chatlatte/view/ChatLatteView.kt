@@ -1,6 +1,7 @@
 package com.github.slowhand.chatlatte.view
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.slowhand.chatlatte.R
+import com.github.slowhand.chatlatte.config.ChatLatteConfig
 import com.github.slowhand.chatlatte.messages.MessageListAdapter
 import com.github.slowhand.chatlatte.models.Message
 import com.github.slowhand.chatlatte.models.User
@@ -16,6 +18,12 @@ import kotlinx.android.synthetic.main.chat_latte_view.view.*
 class ChatLatteView: ConstraintLayout {
 
     /* -- public methods and properties -- */
+    // config
+    var config = ChatLatteConfig()
+        set(value) {
+            field = value
+            applyConfig()
+        }
 
     // all messages
     private var _messages: MutableList<Message> = ArrayList()
@@ -32,12 +40,6 @@ class ChatLatteView: ConstraintLayout {
             adapter.self = value
         }
         get() = adapter.self
-
-    // scroll to end position via send text
-    var autoScrollEnabled = true
-
-    // clear text field via send text
-    var autoClearTextEnabled = true
 
     // join member
     fun join(user: User) = adapter.apply {
@@ -69,8 +71,8 @@ class ChatLatteView: ConstraintLayout {
         _messages.add(message)
         adapter.notifyDataSetChanged()
 
-        if (autoScrollEnabled) messageListView.scrollToEnd()
-        if (autoClearTextEnabled) inputEditText.text.clear()
+        if (config.autoScrollEnabled) messageListView.scrollToEnd()
+        if (config.autoClearTextEnabled) inputEditText.text.clear()
     }
 
     // send button clicked
@@ -86,9 +88,13 @@ class ChatLatteView: ConstraintLayout {
     var onMessageClickListener: (message: Message) -> Unit = {}
     var onMessageLongClickListener: (message: Message) -> Boolean = { false }
 
-    fun setPlaceholder(message: String) {
-        inputEditText.hint = message
-    }
+    // add custom button
+    fun addCustomButton(bitmap: Bitmap, listener: (view: View) -> Unit)
+        = customButton.apply {
+            visibility = View.VISIBLE
+            setImageBitmap(bitmap)
+            setOnClickListener(listener)
+        }
 
     // scroll to end list view
     fun scrollToEnd() = messageListView.scrollToEnd()
@@ -111,10 +117,23 @@ class ChatLatteView: ConstraintLayout {
 
     private fun initialize() {
         LayoutInflater.from(context).inflate(R.layout.chat_latte_view, this)
+        applyConfig()
 
         messageListView.adapter = adapter
         messageListView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter.notifyDataSetChanged()
+    }
+
+    private fun applyConfig() {
+        inputEditText.hint = config.placeholder
+        inputEditText.setHintTextColor(config.placeholderColor)
+
+        messageListView.setBackgroundColor(config.chatBackgroundColor)
+        inputLayoutContainer.setBackgroundColor(config.inputTextContainerColor)
+
+        config.sendButtonImage?.also { sendButton.setImageBitmap(it) }
+        config.galleryButtonImage?.also { galleryButton.setImageBitmap(it) }
+        invalidate()
     }
 
     override fun onDetachedFromWindow() {
