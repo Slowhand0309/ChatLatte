@@ -42,6 +42,7 @@
                 android:layout_gravity="bottom"
                 android:visibility="gone"
                 android:layout_marginBottom="5dp"
+                android:scaleType="centerCrop"
                 android:background="@drawable/translucent_gray_button"/>
 
         <EditText
