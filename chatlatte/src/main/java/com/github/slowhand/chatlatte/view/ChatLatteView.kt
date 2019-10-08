@@ -96,6 +96,12 @@ class ChatLatteView: ConstraintLayout {
             setOnClickListener(listener)
         }
 
+    // change custom button image
+    fun changeCustomButtonImage(bitmap: Bitmap)
+        = customButton.apply {
+            setImageBitmap(bitmap)
+        }
+
     // scroll to end list view
     fun scrollToEnd() = messageListView.scrollToEnd()
 
