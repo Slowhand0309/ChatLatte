@@ -89,10 +89,12 @@ class ChatLatteView: ConstraintLayout {
     var onMessageLongClickListener: (message: Message) -> Boolean = { false }
 
     // add custom button
-    fun addCustomButton(bitmap: Bitmap, listener: (view: View) -> Unit)
+    fun addCustomButton(bitmap: Bitmap, height: Int, listener: (view: View) -> Unit)
         = customButton.apply {
             visibility = View.VISIBLE
             setImageBitmap(bitmap)
+            val params = layoutParams.apply { this.height = height }
+            layoutParams = params
             setOnClickListener(listener)
         }
 
