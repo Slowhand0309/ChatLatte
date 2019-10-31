@@ -98,15 +98,6 @@ class ChatLatteView: ConstraintLayout {
             setOnClickListener(listener)
         }
 
-    fun setCustomButtonSize(width: Int, height: Int)
-        = customButton.apply {
-            val params = layoutParams.apply {
-                this.width = width
-                this.height = height
-            }
-            layoutParams = params
-        }
-
     // change custom button image via bitmao
     fun setCustomButtonImage(bitmap: Bitmap)
         = customButton.apply {
@@ -124,6 +115,34 @@ class ChatLatteView: ConstraintLayout {
     // change custom button image via resource
     fun setCustomButtonImage(@DrawableRes resId: Int)
         = customButton.apply {
+            visibility = View.VISIBLE
+            setImageResource(resId)
+        }
+
+    // add custom button
+    fun setOnClickCircleCustomButtonListener(listener: (view: View) -> Unit)
+        = customCircleButton.apply {
+            visibility = View.VISIBLE
+            setOnClickListener(listener)
+        }
+
+    // change custom button image via bitmao
+    fun setCustomCircleButtonImage(bitmap: Bitmap)
+        = customCircleButton.apply {
+            visibility = View.VISIBLE
+            setImageBitmap(bitmap)
+        }
+
+    // change custom button image via drawable
+    fun setCustomCircleButtonImage(drawable: Drawable)
+        = customCircleButton.apply {
+            visibility = View.VISIBLE
+            setImageDrawable(drawable)
+        }
+
+    // change custom button image via resource
+    fun setCustomCircleButtonImage(@DrawableRes resId: Int)
+        = customCircleButton.apply {
             visibility = View.VISIBLE
             setImageResource(resId)
         }

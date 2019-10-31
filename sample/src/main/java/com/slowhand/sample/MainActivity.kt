@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             placeholder = "input text here."
         }
         chatLatteView.config = config
-        chatLatteView.addCustomButton(BitmapFactory.decodeResource(resources, android.R.drawable.ic_menu_more)) {
+        chatLatteView.setCustomCircleButtonImage(BitmapFactory.decodeResource(resources, R.drawable.man1))
+        chatLatteView.setOnClickCircleCustomButtonListener {
             Toast.makeText(this@MainActivity, "Custom button clicked", Toast.LENGTH_SHORT).show()
         }
 
