@@ -2,9 +2,12 @@ package com.github.slowhand.chatlatte.view
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,19 +92,40 @@ class ChatLatteView: ConstraintLayout {
     var onMessageLongClickListener: (message: Message) -> Boolean = { false }
 
     // add custom button
-    fun addCustomButton(bitmap: Bitmap, height: Int, listener: (view: View) -> Unit)
+    fun setOnClickCustomButtonListener(listener: (view: View) -> Unit)
         = customButton.apply {
             visibility = View.VISIBLE
-            setImageBitmap(bitmap)
-            val params = layoutParams.apply { this.height = height }
-            layoutParams = params
             setOnClickListener(listener)
         }
 
-    // change custom button image
-    fun changeCustomButtonImage(bitmap: Bitmap)
+    fun setCustomButtonSize(width: Int, height: Int)
         = customButton.apply {
+            val params = layoutParams.apply {
+                this.width = width
+                this.height = height
+            }
+            layoutParams = params
+        }
+
+    // change custom button image via bitmao
+    fun setCustomButtonImage(bitmap: Bitmap)
+        = customButton.apply {
+            visibility = View.VISIBLE
             setImageBitmap(bitmap)
+        }
+
+    // change custom button image via drawable
+    fun setCustomButtonImage(drawable: Drawable)
+        = customButton.apply {
+            visibility = View.VISIBLE
+            setImageDrawable(drawable)
+        }
+
+    // change custom button image via resource
+    fun setCustomButtonImage(@DrawableRes resId: Int)
+        = customButton.apply {
+            visibility = View.VISIBLE
+            setImageResource(resId)
         }
 
     // scroll to end list view
