@@ -27,18 +27,29 @@
         <ImageButton
                 android:id="@+id/galleryButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="0.1"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="5dp"
                 android:src="@android:drawable/ic_menu_gallery"
                 android:background="@drawable/translucent_gray_button"/>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/customCircleButton"
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:visibility="gone"
+                android:layout_marginBottom="5dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/translucent_gray_button"/>
+
         <ImageButton
                 android:id="@+id/customButton"
                 android:layout_width="0dp"
                 android:layout_weight="0.1"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:visibility="gone"
                 android:layout_marginBottom="5dp"
@@ -55,7 +66,7 @@
         <ImageButton
                 android:id="@+id/sendButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.1"
                 android:layout_marginBottom="5dp"
